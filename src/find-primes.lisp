@@ -1,0 +1,17 @@
+(defun find-prime (number)
+  "Find the Nº prime number"
+  (declare (optimize (speed 3) (safety 1)))
+  (cond
+    ((> number 1)
+     (let ((primes (list 2))
+           (count 1))
+       (loop for i from 3 by 2 while (< count number)
+             unless (loop for p in (reverse primes) 
+                          while (<= p (isqrt i))
+                          when (zerop (mod i p))
+                          do (return t)
+                          finally (return nil))
+             do (progn (push i primes) (incf count))
+             finally (return (car primes)))))
+    ((= number 1) 2)
+    (t nil)))
